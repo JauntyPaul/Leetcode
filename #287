@@ -1,0 +1,33 @@
+CODE
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+        tortoise = nums[0]
+        hare = nums[0]
+
+        # Part 1
+        while True:
+            tortoise = nums[tortoise] #Tortoise is the one that jumps one at a time (Slow pointer)
+            hare = nums[nums[hare]]  #Hare is the one that jumps twice at a time (Fast Pointer)
+            if tortoise == hare:
+                break
+
+        # Part 2
+        tortoise = nums[0]
+        while tortoise != hare:
+            tortoise = nums[tortoise]
+            hare = nums[hare]
+
+        return hare
+
+
+EXPLANATION
+Here we use the concept of fast and slow pointers
+First we traverse 2 pointers at the same time, one that jumps one at a time, and the other that jumps twice at a time.
+once we they both meet at a point where both the tortoise and hare are equal, we break the iteration. That's the end of part 1
+
+At the end of the part 1, it could be that both the pointers are at the repeating value, but there are cases where they might not be a the repeating values, 
+so directly returning the value of tortoise or hare won't work.
+so we move onto part 2.
+
+In part 2 we reset the tortoise to 0th element and keep the hare at the latest position, then we start iterating both the pointers by single jump untill they meet again, 
+this time when they meet, it is surely the element that is duplicate, thus we return hare/tortoise.
